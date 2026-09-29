@@ -5,12 +5,19 @@ title: DSA-LeetCode
 
 # DSA-LeetCode
 
-## Topics
+## Top Interviews
 
-<ul>
-{% for page in site.pages %}
-  {% if page.url != '/' and page.url contains 'Intervals/' %}
-    <li><a href="{{ page.url | relative_url }}">{{ page.title | default: page.name }}</a></li>
-  {% endif %}
+Welcome to the notes collection for core interview problems.
+
+Use the sidebar to jump directly to a problem and read the solution on the right.
+
+---
+
+## Quick links
+
+{% assign interval_pages = site.pages | where_exp: 'p', 'p.url contains "/Intervals/"' | sort: 'url' %}
+{% for p in interval_pages %}
+  {% unless p.url == '/' %}
+- [{{ p.title | default: p.name }}]({{ p.url | relative_url }})
+  {% endunless %}
 {% endfor %}
-</ul>
