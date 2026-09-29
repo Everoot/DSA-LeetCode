@@ -1,5 +1,4 @@
 ---
-layout: default
 title: 56. Merge Intervals
 tags:
     - Array
@@ -135,5 +134,4 @@ class Solution {
 // TC: O(nlogn)
 // SC: O(1) 空间复杂度：O(1)。排序的栈开销和返回值不计入。
 ```
-
 
