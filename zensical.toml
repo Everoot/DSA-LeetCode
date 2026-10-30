@@ -42,6 +42,7 @@ nav = [
       { "45. Jump Game II" = "array-string/45-jump-game-ii.md" },
       { "274. H-Index" = "array-string/274-h-index.md" },
       { "380. Insert Delete GetRandom O(1)" = "array-string/380-insert-delete-getrandom-o-1.md" },
+      { "1603. Design Parking System" = "array-string/1603-design-parking-system.md" },
       { "238. Product of Array Except Self" = "array-string/238-product-of-array-except-self.md" },
       { "134. Gas Station" = "array-string/134-gas-station.md" },
       { "13. Roman to Integer" = "array-string/13-roman-to-integer.md" },
@@ -78,6 +79,11 @@ nav = [
       { "202. Happy Number" = "hashmap/202-happy-number.md" },
       { "219. Contains Duplicate II" = "hashmap/219-contains-duplicate-ii.md" },
       { "128. Longest Consecutive Sequence" = "hashmap/128-longest-consecutive-sequence.md" },
+      { "359. Logger Rate Limiter" = "hashmap/359-logger-rate-limiter.md" },
+      { "981. Time Based Key-Value Store" = "hashmap/981-time-based-key-value-store.md" },
+    ] },
+    { "Queue" = [
+      { "933. Number of Recent Calls" = "queue/933-number-of-recent-calls.md" },
     ] },
     { "Stack" = [
       { "739. Daily Temperatures" = "stack/739-daily-temperatures.md" },

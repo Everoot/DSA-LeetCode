@@ -5,10 +5,8 @@ tags:
     - Math
     - Design
     - Randomized
-    - Top Interview 150
+    - Top Interviews
 ---
-
-
 
 # [380. Insert Delete GetRandom O(1)](https://leetcode.com/problems/insert-delete-getrandom-o1/)
 
@@ -54,6 +52,70 @@ randomizedSet.getRandom(); // Since 2 is the only number in the set, getRandom()
 
 
 **Solution:**
+
+```java
+class RandomizedSet {
+    public List<Integer> list;
+    public Map<Integer, Integer> map;
+    public Random random;
+        //.  val , index
+
+    public RandomizedSet() {
+        this.list = new ArrayList<>();
+        this.map = new HashMap<>();
+        this.random = new Random();
+    }
+    
+    public boolean insert(int val) {
+        if (!map.containsKey(val)){
+            int index = list.size(); // 0
+            map.put(val, index); // 
+            list.add(val);
+            return true;
+        }else{
+            // map contians
+
+            return false; 
+        }
+    }
+    
+    public boolean remove(int val) {
+        if (!map.containsKey(val)){
+            return false;
+        }else{
+            // left last list value replace the remove one 
+                int removeIndex = map.get(val);
+                int lastVal = list.get(list.size() - 1);
+                list.set(removeIndex, lastVal);
+                map.put(lastVal, removeIndex); // order concerned 
+                map.remove(val);
+                list.remove(list.size() - 1);
+                return true;
+
+
+        }
+    }
+    
+    public int getRandom() {
+        int randomIndex = random.nextInt(list.size());
+        return list.get(randomIndex);
+    }
+}
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * RandomizedSet obj = new RandomizedSet();
+ * boolean param_1 = obj.insert(val);
+ * boolean param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */
+
+
+ // TC: O(1)
+ // SC: O(n)
+```
+
+
 
 ```java
 class RandomizedSet {

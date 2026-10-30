@@ -34,6 +34,7 @@ A collection of common data structure and algorithm problems for interview prepa
 - [x] [45. Jump Game II](docs/array-string/45-jump-game-ii.md)
 - [x] [274. H-Index](docs/array-string/274-h-index.md)
 - [x] [380. Insert Delete GetRandom O(1)](docs/array-string/380-insert-delete-getrandom-o-1.md)
+- [x] [1603. Design Parking System](docs/array-string/1603-design-parking-system.md)
 - [x] [238. Product of Array Except Self](docs/array-string/238-product-of-array-except-self.md)
 - [x] [134. Gas Station](docs/array-string/134-gas-station.md)
 - [x] [13. Roman to Integer](docs/array-string/13-roman-to-integer.md)
@@ -73,6 +74,12 @@ A collection of common data structure and algorithm problems for interview prepa
 - [x] [202. Happy Number](docs/hashmap/202-happy-number.md)
 - [x] [219. Contains Duplicate II](docs/hashmap/219-contains-duplicate-ii.md)
 - [x] [128. Longest Consecutive Sequence](docs/hashmap/128-longest-consecutive-sequence.md)
+- [x] [359. Logger Rate Limiter](docs/hashmap/359-logger-rate-limiter.md)
+- [x] [981. Time Based Key-Value Store](docs/hashmap/981-time-based-key-value-store.md)
+
+## Queue
+
+- [x] [933. Number of Recent Calls](docs/queue/933-number-of-recent-calls.md)
 
 ## Stack
 

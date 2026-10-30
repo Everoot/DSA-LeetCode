@@ -43,14 +43,14 @@ class Solution {
         Map<Character, TrieNode> children = new HashMap<>();
         boolean isWord = false;
     }
-
+// k = word.length 
     static class Trie{
         TrieNode root;
         Trie(){
             root = new TrieNode();
         }
 
-        public void insert(String word){
+        public void insert(String word){ // O(L)
             TrieNode cur = root;
             for (char c : word.toCharArray()){
                 cur.children.putIfAbsent(c, new TrieNode());
@@ -67,8 +67,8 @@ class Solution {
 
         Trie trie = new Trie();
 
-        for (String word : words){
-            trie.insert(word);
+        for (String word : words){// O(k)    --> O(KL)
+            trie.insert(word); //O(L)
         }
 
         n = board.length;
@@ -78,21 +78,25 @@ class Solution {
 
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < n; i++){
-            for (int j = 0; j < m; j++){
-                dfs(board, i, j, trie.root, sb, result, visited);
+        for (int i = 0; i < n; i++){// O(n)
+            for (int j = 0; j < m; j++){//O(m)
+                dfs(board, i, j, trie.root, sb, result, visited); // O(4^)
             }
         }
+      
+      // TC: O(nm * 4^L) -> O(n*M * 4 *(3)^{L-1})
 
         return result;
     }
-
+  
+  // TC: O(KL + nm * 4L)
+  // SC: 
     private void dfs(char[][] board, int x, int y, TrieNode node, StringBuilder sb, List<String> result, boolean[][] visited){
         if (x < 0 || x >= n || y < 0 || y >= m || visited[x][y]){
             return;
         }
 
-        char ch = board[x][y];
+        char ch = board[x][y]; // 当前board[x][y]
 
         if (!node.children.containsKey(ch)){
             return;
@@ -101,7 +105,7 @@ class Solution {
         sb.append(ch);
         node = node.children.get(ch);
 
-        if (node.isWord == true){
+        if (node.isWord == true){ // 要查询当前层的, 注意顺序 这个不要过早判断
             result.add(sb.toString());
             node.isWord = false;
         }

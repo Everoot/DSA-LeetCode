@@ -5,6 +5,7 @@ tags:
     - Graph
     - Topological Sort
     - Top Interviews
+    - Amazon
 ---
 
 # [207. Course Schedule](https://leetcode.com/problems/course-schedule/)
@@ -326,4 +327,138 @@ class Solution {
 }
 
 ```
+
+
+
+
+
+变种:
+
+You are given a set of training courses for employees. Some courses depend on other courses.
+
+For example:
+
+```text
+OperatingSystem: [Database, Logging]
+Database: [Logging]
+Logging: []
+```
+
+Determine whether the courses are valid.
+
+```java
+import java.util.*;
+
+class Solution {
+
+    public boolean isValidTrainingCourses(
+            Map<String, List<String>> courses) {
+
+        Set<String> visited = new HashSet<>();
+
+        for (String course : courses.keySet()) {
+
+            Set<String> curPath = new HashSet<>();
+
+            if (dfs(course, courses, curPath, visited)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean dfs(String course, Map<String, List<String>> courses, Set<String> curPath, Set<String> visited) {
+
+        // If the course is already in the current DFS path,
+        // we found a cycle.
+        if (curPath.contains(course)) {
+            return true;
+        }
+
+        // If we already checked this course before,
+        // there is no need to check it again.
+        if (visited.contains(course)) {
+            return false;
+        }
+
+        curPath.add(course);
+        visited.add(course);
+
+        // If the course is not explicitly defined,
+        // treat it as having no dependencies.
+        for (String dependency : courses.getOrDefault(course, Collections.emptyList())) {
+            if (dfs(dependency, courses, curPath, visited)) {
+                return true;
+            }
+        }
+
+        curPath.remove(course);
+
+        return false;
+    }
+}
+```
+
+
+
+```java
+import java.util.*;
+
+class Solution {
+
+    public boolean isValidTrainingCourses(Map<String, List<String>> courses) {
+
+        // validate missing dependencies
+        for (String course : courses.keySet()) {
+            for (String dependency : courses.get(course)) {
+                if (!courses.containsKey(dependency)) {
+                    return false;
+                }
+            }
+        }
+
+        Set<String> visited = new HashSet<>();
+
+        for (String course : courses.keySet()) {
+            Set<String> curPath = new HashSet<>();
+
+            if (dfs(course, courses, curPath, visited)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean dfs(String course, Map<String, List<String>> courses, Set<String> curPath, Set<String> visited) {
+
+        if (curPath.contains(course)) {
+            return true;
+        }
+
+        if (visited.contains(course)) {
+            return false;
+        }
+
+        curPath.add(course);
+        visited.add(course);
+
+        for (String dependency : courses.get(course)) {
+            if (dfs(dependency, courses, curPath, visited)) {
+                return true;
+            }
+        }
+
+        curPath.remove(course);
+
+        return false;
+    }
+}
+
+// TC: V = number of courses
+// E = number of dependency relationships
+```
+
+
 

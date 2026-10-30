@@ -34,6 +34,74 @@ Output: [1,2,3,4,8,12,11,10,9,5,6,7]
 
 **Solution:** 
 
+```java
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> result = new ArrayList<>();
+
+        int row = matrix.length;
+        int col = matrix[0].length;
+
+        if (row == 0 || col == 0){
+            return result;
+        }
+
+        int left = 0;
+        int right = col - 1;
+        int up = 0;
+        int down = row - 1;
+
+        while(left <= right && up <= down){
+            // left -> right
+            // get every i in the top row
+            for (int i = left; i <= right; i++){
+                result.add(matrix[up][i]);
+            }
+            up++;
+
+            // up -> down
+            // get every i in the right col
+            for (int i = up; i <= down; i++){
+                result.add(matrix[i][right]);
+            }
+            right--;
+
+
+            if (left > right || up > down) {
+                break;
+            }
+
+            // right -> left
+            // get every i in the right cl
+            for (int i = right; i >= left; i--){
+                result.add(matrix[down][i]);
+            }
+            down--;
+
+
+            // down -> up
+            // get every i in the bottom row
+            for (int i = down; i >= up; i--){
+                result.add(matrix[i][left]);
+            }
+            left++;
+        }
+
+        return result;
+        
+    }
+}
+
+// TC: O(n)
+// SC: O(1)
+```
+
+
+
+
+
+
+
 **总体思路**
 
 根据题意，我们从左上角 (0,0) 出发，按照「右下左上」的顺序前进：
@@ -298,6 +366,64 @@ class Solution {
 
 // TC: O(n)
 // SC: O(1)
+```
+
+
+
+
+
+```java
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> result = new ArrayList<>();
+
+        int row = matrix.length;
+        int col = matrix[0].length;
+
+        if (row == 0 || col == 0){
+            return result;
+        }
+
+        int left = 0;
+        int right = col - 1;
+        int up = 0;
+        int down = row - 1;
+
+        while(left <= right && up <= down){
+            // left -> right
+            for (int i = left; i <= right; i++){
+                result.add(matrix[up][i]);
+            }
+            up++;
+
+            // up -> down
+            for (int j = up; j <= down; j++){
+                result.add(matrix[j][right]);
+            }
+            right--;
+
+            // right -> left
+            if (up <= down){
+                for (int i = right; i >= left; i--){
+                    result.add(matrix[down][i]);
+                }
+                down--;
+            }
+
+
+            // down -> up
+            if (left <= right){
+                for (int j = down; j >= up; j--){
+                    result.add(matrix[j][left]);
+                }
+                left++;
+            }
+        }
+
+        return result;
+        
+    }
+}
 ```
 
 
