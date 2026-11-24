@@ -31,37 +31,49 @@ Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (m
 Total amount you can rob = 2 + 9 + 1 = 12.
 ```
 
-**Solution:**
+## Solution
 
-![Screenshot 2024-11-29 at 11.57.45](./198. House Robber/Screenshot 2024-11-29 at 11.57.45.png)
+```mermaid
+graph TD
+4(index=4) -->|Not Choose| 3(index=3)
+4 -->|Choose| A1(2)
+
+A1 --> B3(1)
+
+B3 --> C3(0)
+A1 --> C4(0)
 
 
+3 -->|Not Choose| A2(2)
 
-回溯三问: 
+A2 -->|Not Choose| B2(1)
+A2 --> C5(0)
 
-1. 当前操作? 
+B2 --> C2(0)
 
-   枚举第$i$个房子选/不选
+3 --> B1(1)
+B1 --> C1(0)
+```
 
-2. 子问题?
+Three questions for the recursive approach:
 
-   从前$i$个房子中得到的最大金额和
+1. **What is the current decision?**  
+   Choose whether to rob house $i$.
+2. **What is the subproblem?**  
+   Find the maximum amount that can be robbed from the first $i$ houses.
+3. **What are the next subproblems?**  
+   Consider both choices:
 
-3. 下一个子问题?
-
-   分类讨论: 
-
-   3.1 不选: 从前$i - 1$ 个房子中得到的最大金额和
-
-   3.2 选: 从前$i - 2$ 个房子中得到的最大金额和
+    - Skip house $i$: use the maximum amount from the first $i - 1$ houses.
+    - Rob house $i$: add `nums[i]` to the maximum amount from the first $i - 2$ houses.
 
 $$
 dfs(i) = max(dfs(i - 1), dfs(i - 2) + nums[i])
 $$
 
-在定义DFS或者DP数组的含义时候, 它只能表示从一些元素中算出来的结果, 而不是从一个元素中算出来的结果. 另外一点是, 这里没有把得到额金额和作为递归的入参, 而是把它当作了返回值, 后面再写记忆化的时候, 你就明白为什么了
+When defining a DFS state or a DP state, the state should represent the result calculated from a range of elements rather than from a single element. The accumulated amount is returned by the recursive function instead of being passed as an argument. This makes memoization possible because the result depends only on the current index.
 
-### 1. 递归
+### 1. Recursion
 
 ```java
 class Solution {
@@ -69,12 +81,13 @@ class Solution {
         int n = nums.length;
         int index = n - 1;
 
-        int result = dfs(index, nums); // 从最后一个房子开始思考
+        int result = dfs(index, nums); // Start from the last house.
         return result;
     }
-		// dfs(i) 表示从 nums[0] 到nums[i] 最多能偷多少
+
+    // dfs(i) is the maximum amount that can be robbed from nums[0] to nums[i].
     private int dfs(int index, int[] nums){
-        if (index < 0){ // 递归边界 (没有房子)
+        if (index < 0){ // Base case: there are no houses left.
             return 0;
         }
 
@@ -83,16 +96,12 @@ class Solution {
     }
 }
 
-// TLX
+// TLE
 // TC: O(2^n)
 // SC: O(n)
 ```
 
-
-
-
-
-### 2. 递归搜索 + 保存计算结果 = 记忆化搜索
+### 2. Memoization
 
 ```mermaid
 graph TD
@@ -121,7 +130,6 @@ graph TD
 4 -->|Not Choose| 3
 4 -->|Choose| A1((2))
 
-
 3 --> A2(2)
 A2 --> B2(1)
 B2 --> C2(0)
@@ -130,21 +138,17 @@ A2 --> C5((0))
 
 ```
 
+Store each recursive result. When the same input appears again, return the saved result instead of recalculating it.
 
-
-把递归的计算结果**保存**下来, 那么下次递归到同样的入参时就直接返回先前保存的结果.
-
-**递归搜索 + 保存计算结果 = 记忆化搜索**
-
-
+**Recursive search + cached results = memoization**
 
 ```java
 class Solution {
     public int rob(int[] nums) {
         int n = nums.length;
-        int index = n - 1; // 从最后一个房子开始思考
+        int index = n - 1; // Start from the last house.
         int[] memo = new int[n];
-        Arrays.fill(memo, -1); // -1 表示没有计算过
+        Arrays.fill(memo, -1); // -1 means this state has not been calculated.
         int result = dfs(index, nums, memo);
         return result;
         
@@ -166,31 +170,29 @@ class Solution {
     }
 }
 
-// TC: O(n) 状态个数*单个状态时间
+// TC: O(n), number of states * time per state
 // SC: O(n)
 ```
 
 ![JPEG image-4EEC-BCD8-F7-0](./198. House Robber/JPEG image-4EEC-BCD8-F7-0.jpeg)
 
-### 3. 1:1 翻译成递推
+### 3. Bottom-up Dynamic Programming
 
-自顶向下算 = 记忆化搜索
+Top-down evaluation uses memoization.
 
-自低向上算 = 递推
+Bottom-up evaluation uses an iterative recurrence.
 
-1:1 翻译成递推:
+Translate the recursive solution into a recurrence:
 
-1. dfs -> f数组
-2. 递归 -> 循环
-3. 递归边界 
-
+1. Replace `dfs` with the array `f`.
+2. Replace recursion with a loop.
+3. Convert the recursive base case into the initial DP values.
 
 $$
 dfs(i) = max(dfs(i - 1), dfs(i - 2) + nums[i])\\
 f[i] = max(f[i-1], f[i-2] + nums[i])\\
 f[i + 2] = max(f[i+1], f[i] + nums[i])
 $$
-
 
 ```java
 class Solution {
@@ -224,8 +226,6 @@ class Solution {
 // TC: O(n)
 // SC: O(n)
 ```
-
-
 
 ```java
 class Solution {
@@ -294,9 +294,7 @@ int rob(int* nums, int numsSize){
 }
 ```
 
-
-
-### 4. 空间优化
+### 4. Space Optimization
 
 $$
 dfs(i) = max(dfs(i - 1), dfs(i - 2) + nums[i])\\
@@ -304,9 +302,9 @@ f[i] = max(f[i-1], f[i-2] + nums[i])\\
 f[i + 2] = max(f[i+1], f[i] + nums[i])
 $$
 
-当前 = max(上一个, 上上一个 + nums[i])
+`current = max(previous, twoBack + nums[i])`
 
-$f_0$ 表示上上一个, $f_1$ 表示上一个
+$f_0$ represents the state two positions back, and $f_1$ represents the previous state.
 
 $newF = max(f_1, f_0 + nums[i])$
 
@@ -351,8 +349,4 @@ class Solution {
 // TC: O(n)
 // SC: O(1)
 ```
-
-
-
-
 

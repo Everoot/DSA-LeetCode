@@ -44,11 +44,11 @@ class Solution {
         List<List<String>> result = new ArrayList<>();
         int n = strs.length;
         Map<String, List<String>> subResult = new HashMap<>();
-        for (int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++){// O(n)
             String cur = strs[i];
-            char[] curArray = cur.toCharArray();
-            Arrays.sort(curArray);
-            String sorted = new String(curArray);
+            char[] curArray = cur.toCharArray(); // O(k)
+            Arrays.sort(curArray); // O(klogk)
+            String sorted = new String(curArray); // O(k)
 
             if (subResult.containsKey(sorted)){
                 subResult.get(sorted).add(cur);
@@ -67,8 +67,8 @@ class Solution {
 }
 
 
-// TC: O(n)
-// SC: O(n)
+// TC: O(nklogk)
+// SC: O(nk)
 ```
 
 

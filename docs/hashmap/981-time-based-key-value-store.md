@@ -95,7 +95,7 @@ class TimeMap {
         return res;
     }
   
-  // TC: O(nlogk) // k = we use binary search on the key's bucket which 
+  // TC: O(logk) // k = we use binary search on the key's bucket which 
   // have at most M elelements and to hash the string it takes O(L) time.
 }
 
@@ -106,7 +106,7 @@ class TimeMap {
  * String param_2 = obj.get(key,timestamp);
  */
 
-// TC: O(nlogk)
+// TC: O(logn)
 // SC: O(n)
 ```
 
